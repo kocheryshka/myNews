@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    generate-ddl: true
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/my_news
+    username: postgres
+    password: postgres
+    hikari:
+      schema: my_news_schema
+      connection-init-sql: CREATE SCHEMA IF NOT EXISTS my_news_schema
