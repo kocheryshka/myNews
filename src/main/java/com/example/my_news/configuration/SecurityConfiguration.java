@@ -49,7 +49,8 @@ public class SecurityConfiguration {
                                            AuthenticationManager authenticationManager) throws Exception {
         http.authorizeHttpRequests(
                 (auth) -> auth
-                    .requestMatchers(HttpMethod.POST, "/api/user/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/v1/user/**").permitAll()
+                    .requestMatchers("/swagger-ui/**").permitAll()
                     .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

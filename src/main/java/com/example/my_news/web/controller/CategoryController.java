@@ -1,11 +1,12 @@
 package com.example.my_news.web.controller;
 
 import com.example.my_news.mapper.CategoryMapper;
-import com.example.my_news.model.Category;
 import com.example.my_news.service.CategoryService;
 import com.example.my_news.web.model.list.CategoryListResponse;
 import com.example.my_news.web.model.single.CategoryResponse;
+import com.example.my_news.web.model.single.PaginationRequest;
 import com.example.my_news.web.model.upsert.UpsertCategoryRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/api/v1/category")
 @RequiredArgsConstructor
+@Tag(name = "Category V1", description = "Category API version V1")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -23,8 +25,10 @@ public class CategoryController {
     private final CategoryMapper categoryMapper;
 
     @GetMapping
-    public ResponseEntity<CategoryListResponse> findAll(){
-        return ResponseEntity.ok(categoryMapper.categoryListToCategoryListResponse(categoryService.findAll()));
+    public ResponseEntity<CategoryListResponse> findAll(PaginationRequest request){
+        return ResponseEntity.ok(
+                categoryMapper.categoryListToCategoryListResponse(
+                        categoryService.findAll(request.pageRequest()).stream().toList()));
     }
 
     @GetMapping("/{id}")

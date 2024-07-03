@@ -1,5 +1,6 @@
 package com.example.my_news.service.impl;
 
+import com.example.my_news.aop.CheckAccess;
 import com.example.my_news.model.Comment;
 import com.example.my_news.model.News;
 import com.example.my_news.model.User;

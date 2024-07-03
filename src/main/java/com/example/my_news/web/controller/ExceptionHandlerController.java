@@ -1,5 +1,6 @@
 package com.example.my_news.web.controller;
 
+import com.example.my_news.exception.AccessDeniedException;
 import com.example.my_news.exception.AlreadyExistsException;
 import com.example.my_news.exception.EntityNotFoundException;
 import com.example.my_news.web.model.single.ErrorResponse;
@@ -20,6 +21,12 @@ public class ExceptionHandlerController {
     @ExceptionHandler(AlreadyExistsException.class)
     ResponseEntity<ErrorResponse> handleAlreadyExists(AlreadyExistsException e){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                new ErrorResponse(e.getLocalizedMessage()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException e){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
                 new ErrorResponse(e.getLocalizedMessage()));
     }
 

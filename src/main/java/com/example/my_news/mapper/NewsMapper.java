@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Mapper(componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.IGNORE//,
-//        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 @DecoratedWith(NewsMapperDecorator.class)
 public interface NewsMapper {

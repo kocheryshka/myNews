@@ -6,11 +6,12 @@ import com.example.my_news.model.User;
 import com.example.my_news.repository.UserRepository;
 import com.example.my_news.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -23,8 +24,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override
@@ -82,6 +83,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(UUID id) {
-
+        userRepository.deleteById(id);
     }
 }

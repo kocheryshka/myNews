@@ -5,11 +5,14 @@ import com.example.my_news.model.Category;
 import com.example.my_news.model.News;
 import com.example.my_news.model.User;
 import com.example.my_news.repository.NewsRepository;
+import com.example.my_news.repository.NewsSpecification;
 import com.example.my_news.security.AppUserPrincipal;
 import com.example.my_news.service.CategoryService;
 import com.example.my_news.service.NewsService;
 import com.example.my_news.service.UserService;
+import com.example.my_news.web.model.single.NewsFilterRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +29,10 @@ public class NewsServiceImpl implements NewsService {
     private final CategoryService categoryService;
 
     @Override
-    public List<News> findAll() {
-
-        return newsRepository.findAll();
+    public Page<News> filterBy(NewsFilterRequest filter) {
+        return newsRepository.findAll(
+                NewsSpecification.withFilter(filter),
+                filter.getPagination().pageRequest());
     }
 
     @Override
@@ -50,15 +54,16 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public News update(News news) {
         News existingNews = findById(news.getId());
+        System.out.println("existingNews.getCategory().getId(): " + existingNews.getCategory().getId());
+        System.out.println("news getCategory: " + news.getCategory());
         if (news.getCategory() != null && !news.getCategory().getId().equals(existingNews.getCategory().getId())){
             Category newCategory = categoryService.findById(news.getCategory().getId());
             existingNews.setCategory(newCategory);
         }
 
-        if (news.getText() != null && !news.getText().equals(existingNews.getText())){
+        /*if (news.getText() != null && !news.getText().equals(existingNews.getText())){
             existingNews.setText(news.getText());
-        }
-
+        }*/
         return newsRepository.save(existingNews);
     }
 

@@ -1,11 +1,14 @@
 package com.example.my_news.web.controller;
 
+import com.example.my_news.aop.CheckAccess;
+import com.example.my_news.aop.EntityType;
 import com.example.my_news.mapper.CommentMapper;
 import com.example.my_news.model.Comment;
 import com.example.my_news.service.CommentService;
 import com.example.my_news.web.model.list.CommentListResponse;
 import com.example.my_news.web.model.single.CommentResponse;
 import com.example.my_news.web.model.upsert.UpsertCommentRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/comment")
+@RequestMapping("/api/v1/comment")
 @RequiredArgsConstructor
+@Tag(name = "Comment V1", description = "Comment API version V1")
 public class CommentController {
 
     private final CommentService commentService;
@@ -40,6 +44,7 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
+    @CheckAccess(entityType = EntityType.COMMENT)
     public ResponseEntity<CommentResponse> update(@PathVariable UUID id, @RequestBody UpsertCommentRequest request){
         Comment comment = commentService.findById(id);
         comment.setText(request.getText());
@@ -48,6 +53,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
+    @CheckAccess(entityType = EntityType.COMMENT)
     public ResponseEntity<Void> delete(@PathVariable UUID id){
         commentService.deleteById(id);
 
