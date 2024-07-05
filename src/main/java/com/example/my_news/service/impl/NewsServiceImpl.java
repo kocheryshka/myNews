@@ -1,7 +1,6 @@
 package com.example.my_news.service.impl;
 
 import com.example.my_news.exception.EntityNotFoundException;
-import com.example.my_news.model.Category;
 import com.example.my_news.model.News;
 import com.example.my_news.model.User;
 import com.example.my_news.repository.NewsRepository;
@@ -17,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,7 +24,6 @@ public class NewsServiceImpl implements NewsService {
 
     private final NewsRepository newsRepository;
     private final UserService userService;
-    private final CategoryService categoryService;
 
     @Override
     public Page<News> filterBy(NewsFilterRequest filter) {
@@ -53,18 +50,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News update(News news) {
-        News existingNews = findById(news.getId());
-        System.out.println("existingNews.getCategory().getId(): " + existingNews.getCategory().getId());
-        System.out.println("news getCategory: " + news.getCategory());
-        if (news.getCategory() != null && !news.getCategory().getId().equals(existingNews.getCategory().getId())){
-            Category newCategory = categoryService.findById(news.getCategory().getId());
-            existingNews.setCategory(newCategory);
-        }
-
-        /*if (news.getText() != null && !news.getText().equals(existingNews.getText())){
-            existingNews.setText(news.getText());
-        }*/
-        return newsRepository.save(existingNews);
+        return newsRepository.save(news);
     }
 
     @Override

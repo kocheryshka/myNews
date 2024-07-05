@@ -11,8 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class UpsertCommentRequest {
 
-    //private String username;
-
     private UUID newsId;
 
     private String text;

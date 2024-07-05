@@ -5,7 +5,6 @@ import com.example.my_news.web.model.list.UserListResponse;
 import com.example.my_news.web.model.single.UserResponse;
 import com.example.my_news.web.model.upsert.UpsertUserRequest;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;

@@ -35,7 +35,7 @@ public class News {
 
     private String text;
 
-    @OneToMany(mappedBy = "news")
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

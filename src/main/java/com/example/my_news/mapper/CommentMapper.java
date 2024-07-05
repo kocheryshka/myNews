@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
-import java.util.UUID;
 
 @Mapper(componentModel = "spring", typeConversionPolicy = ReportingPolicy.IGNORE)
 @DecoratedWith(CommentMapperDecorator.class)

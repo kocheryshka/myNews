@@ -5,14 +5,12 @@ import com.example.my_news.web.model.list.CategoryListResponse;
 import com.example.my_news.web.model.single.CategoryResponse;
 import com.example.my_news.web.model.upsert.UpsertCategoryRequest;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 import java.util.UUID;
 
-//ToDo uses!!!!
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE/*, uses = !!!!!!!!!!*/)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CategoryMapper {
 
     CategoryResponse categoryToResponse(Category category);

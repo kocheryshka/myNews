@@ -3,7 +3,6 @@ package com.example.my_news.mapper;
 import com.example.my_news.model.Category;
 import com.example.my_news.model.News;
 import com.example.my_news.service.CategoryService;
-import com.example.my_news.service.NewsService;
 import com.example.my_news.service.UserService;
 import com.example.my_news.web.model.single.NewsResponse;
 import com.example.my_news.web.model.single.OneNewsResponse;
@@ -19,9 +18,6 @@ public abstract class NewsMapperDecorator implements NewsMapper{
 
     @Autowired
     private CategoryService categoryService;
-
-    @Autowired
-    private NewsService newsService;
 
     @Autowired
     private CommentMapper commentMapper;
@@ -53,5 +49,14 @@ public abstract class NewsMapperDecorator implements NewsMapper{
         Category category = categoryService.findById(request.getCategoryId());
         news.setCategory(category);
         return news;
+    }
+
+    @Override
+    public void requestToNews(UUID newsId, UpsertNewsRequest request, News news) {
+        delegate.requestToNews(newsId, request, news);
+        if (request.getCategoryId() != null){
+            Category category = categoryService.findById(request.getCategoryId());
+            news.setCategory(category);
+        }
     }
 }

@@ -29,9 +29,7 @@ public interface NewsSpecification {
             return null;
         }
 
-        return (root, query, cb) -> {
-            return cb.equal(root.get(News.Fields.user).get(User.Fields.username), username);
-        };
+        return (root, query, cb) -> cb.equal(root.get(News.Fields.user).get(User.Fields.username), username);
     }
 
 }

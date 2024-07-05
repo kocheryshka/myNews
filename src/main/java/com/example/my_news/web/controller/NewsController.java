@@ -55,10 +55,9 @@ public class NewsController {
     public ResponseEntity<OneNewsResponse> update(@PathVariable UUID id, @RequestBody UpsertNewsRequest request){
         News news = newsService.findById(id);
         newsMapper.requestToNews(id, request, news);
-        news = newsService.update(news);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(newsMapper.oneNewsToResponse(news));
+                .body(newsMapper.oneNewsToResponse(newsService.update(news)));
     }
 
     @DeleteMapping("/{id}")

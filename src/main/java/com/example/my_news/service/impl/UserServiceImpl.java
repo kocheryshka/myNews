@@ -44,7 +44,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new AlreadyExistsException(
+                    MessageFormat.format("Username {0} already exists!", user.getUsername()));
+        }
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new AlreadyExistsException(
+                    MessageFormat.format("Email {0} already exists!", user.getEmail()));
+        }
+        if (userRepository.existsByPhone(user.getPhone())) {
+            throw new AlreadyExistsException(
+                    MessageFormat.format("Phone {0} already exists!", user.getPhone()));
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return userRepository.save(user);
     }
 
@@ -70,7 +84,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         if (user.getPhone() != null && !user.getPhone().equals(existingUser.getPhone())) {
-            if (userRepository.existsByEmail(user.getPhone())) {
+            if (userRepository.existsByPhone(user.getPhone())) {
                 throw new AlreadyExistsException(
                         MessageFormat.format("Phone {0} already exists!", user.getPhone()));
             } else {
